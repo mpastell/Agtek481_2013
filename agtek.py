@@ -65,17 +65,22 @@ def plot_filterz(b, a=1):
     plot_stepz(b, a)
     subplots_adjust(hspace=0.3, wspace = 0.3)
 
-def periodogram(x, Fs = 1.0):
-    figure() #Open new figure
+def periodogram(x, Fs = 1.0, scale="linear"):
     N = len(x)
     k = N/2+1
     P = fft(x)[:k]
     M = 2*np.abs(P)/N
     Sj = M**2/2
     f =  Fs*linspace(0, 0.5, k) #Scale by sample rate
-    plot(f, Sj)
+    if scale = "linear":
+        plot(f, Sj)
+        ylabel('Power/frequency (dB/rad/sample)')
+    else:
+        Sj_db = 20*log10(2*(np.abs(h)/len(h)))
+        plot(f, Sj_db)
+        ylabel('Power / frequency ')
     xlabel('Frequency')
-    ylabel('PSD / Frequency')
+    
 
 def autocorr(x, lag=10):
     c = correlate(x, x, 'full')
